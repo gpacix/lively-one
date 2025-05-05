@@ -1,0 +1,32 @@
+{
+  "name": "gpacix--lively-one",
+  "author": {
+    "name": "gpacix"
+  },
+  "description": "First Lively Kernel project",
+  "scripts": {
+    "build": "rm -rf build/* && export MINIFY='' && ./tools/build.sh",
+    "build-minified": "rm -rf build/* && export MINIFY=true && ./tools/build.sh"
+  },
+  "dependencies": {
+    "@rollup/plugin-json": "4.1.0",
+    "rollup": "^2.70.2",
+    "rollup-plugin-export-default": "1.4.0",
+    "rollup-plugin-polyfill-node": "0.9.0"
+  },
+  "lively": {
+    "projectDependencies": [],
+    "boundLivelyVersion": "c725a776b26bd744331765a4881ba4c0557d2fea",
+    "repositoryIsPrivate": false,
+    "repoBelongsToOrg": false,
+    "testOnPush": true,
+    "buildOnPush": false,
+    "deployOnPush": false,
+    "canUsePages": true
+  },
+  "version": "0.1.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gpacix/lively-one"
+  }
+}
