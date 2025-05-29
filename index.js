@@ -1,4 +1,7 @@
+/* global alert */
 'format esm';
 export async function main () {
-    // THIS FUNCTION IS THE ENTRY POINT IN THE BUNDLED APPLICATION!
+  alert('Hello, world!');
 }
+
+// export * from './things.js';
