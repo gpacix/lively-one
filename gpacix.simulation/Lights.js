@@ -48,7 +48,7 @@ export class Light extends Ellipse {
 
   // Method to update the visual appearance based on 'isLit' state
   updateVisuals() {
-    this.setFill(this.isLit ? Color.yellow : Color.darkGray);
+    this.fill = (this.isLit ? Color.rgb(255, 255, 0, 255) : Color.darkGray);
   }
 
   // Event handler for mouse click (or touch release)
