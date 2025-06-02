@@ -10,11 +10,11 @@ import { Color, pt, rect } from 'lively.graphics';
 // ===========================================================================
 export class Light extends Ellipse {
   // Static properties define how this morph's properties behave (e.g., serialization, inspection)
-  static get properties() {
+  static get properties () {
     return {
       isLit: {
         defaultValue: false, // Default state: off
-        set(value) {
+        set (value) {
           // Custom setter to update visuals immediately when 'isLit' changes
           this.setProperty('isLit', value); // Actually sets the property
           this.updateVisuals(); // Calls the method to change color
@@ -47,12 +47,12 @@ export class Light extends Ellipse {
   }
 
   // Method to update the visual appearance based on 'isLit' state
-  updateVisuals() {
     this.fill = (this.isLit ? Color.rgb(255, 255, 0, 255) : Color.darkGray);
+  updateVisuals () {
   }
 
   // Event handler for mouse click (or touch release)
-  onMouseUp(evt) {
+  onMouseUp (evt) {
     this.isLit = !this.isLit; // Toggle the 'isLit' property
     evt.stop(); // Stop event propagation to prevent it from affecting parent morphs
   }
@@ -62,7 +62,7 @@ export class Light extends Ellipse {
 // 2. LightPanel Morph: A container for the four lights
 // ===========================================================================
 export class LightPanel extends Box {
-  static get properties() {
+  static get properties () {
     return {
       name: { defaultValue: 'LightPanel' },
       padding: { defaultValue: 20 } // Padding around the lights
@@ -70,7 +70,7 @@ export class LightPanel extends Box {
   }
 
   // Constructor: Creates and arranges the light morphs
-  constructor(bounds = rect(0, 0, 260, 100)) {
+  constructor (bounds = rect(0, 0, 260, 100)) {
     super(bounds); // Call the parent Box constructor
 
     this.fill = Color.lightgray;
@@ -81,7 +81,7 @@ export class LightPanel extends Box {
     this.setupLights(); // Call a helper method to create and add lights
   }
 
-  setupLights() {
+  setupLights () {
     const lightSize = 50;
     const spacing = 10;
     let currentX = this.padding; // Start X position for the first light
