@@ -1,9 +1,11 @@
 // MyLights.js
 
 // Import necessary modules from lively.next
-import { Morph as Box, Ellipse, World } from 'lively.morphic';
+import { Morph as Box, Ellipse } from 'lively.morphic'; // , World
 import { Color, pt, rect } from 'lively.graphics';
 // import { pt, rect } from 'lively.graphics/geometry-2d.js'; // For point and rectangle helpers
+
+const lightOnColor = Color.rgb(192, 224, 255, 255);
 
 // ===========================================================================
 // 1. Light Morph: Represents a single clickable light
@@ -47,8 +49,8 @@ export class Light extends Ellipse {
   }
 
   // Method to update the visual appearance based on 'isLit' state
-    this.fill = (this.isLit ? Color.rgb(255, 255, 0, 255) : Color.darkGray);
   updateVisuals () {
+    this.fill = (this.isLit ? lightOnColor : Color.darkGray);
   }
 
   // Event handler for mouse click (or touch release)
