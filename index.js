@@ -6,6 +6,7 @@ export async function main () {
 
 export * from './morethings.js';
 export * from './things.js';
-export * from './gpacix.simulation/Lights.js';
+export * from './lights.js';
+// export * from './gpacix.simulation/Lights.js';
 
 export const thingtwo = 'Thing Two!';
