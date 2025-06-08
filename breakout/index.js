@@ -159,9 +159,11 @@ export class BreakoutGame extends Box {
       isGameRunning: { defaultValue: false },
       isGameOver: { defaultValue: false },
       gameLoopInterval: { serialize: false }, // Handle for the setInterval loop
+      _errorTimeout: { serialize: false }, // Timeout handle for error display
       statusMessage: { serialize: false }, // Text morph for game status
       scoreDisplay: { serialize: false }, // Text morph for score
-      livesDisplay: { serialize: false } // Text morph for lives
+      livesDisplay: { serialize: false }, // Text morph for lives
+      errorDisplay: { serialize: false } // New property for error display
     };
   }
 
@@ -180,6 +182,8 @@ export class BreakoutGame extends Box {
     this.addDisplays(); // Add UI for score, lives, status
     this.resetGame(); // Initialize game to starting state
     this.updateStatus('Press Left/Right arrows to move. Press SPACE to start!');
+
+    this.setupGlobalErrorCatching(); // Set up global error handling
   }
 
   // Sets up the paddle, ball, and calls createBricks
@@ -502,6 +506,67 @@ export class BreakoutGame extends Box {
   // Updates the score display text
   updateScore () {
     this.scoreDisplay.textString = `Score: ${this.score}`;
+  }
+
+  // ===========================================================================
+  // Global Error Catching
+  // ===========================================================================
+  setupGlobalErrorCatching () {
+    this.errorDisplay = new Text({
+      name: 'errorDisplay',
+      textString: '',
+      fontColor: Color.red,
+      fontSize: 16,
+      fontWeight: 'bold',
+      fill: Color.rgba(0, 0, 0, 0.7), // Semi-transparent black background
+      borderColor: Color.red,
+      borderWidth: 2,
+      padding: rect(5, 5, 5, 5),
+      visible: false, // Hidden by default
+      grabbable: false,
+      reactsToPointer: false, // So it doesn't block game interaction
+      position: pt(10, this.height - 100), // Position at bottom left, above paddle
+      extent: pt(this.width - 20, 90), // Fixed width, adaptable height
+      clipMode: 'hidden' // To truncate long messages
+    });
+    this.addMorph(this.errorDisplay);
+
+    // Catch uncaught errors
+    window.onerror = (message, source, lineno, colno, error) => {
+      let errorMessage = `Error: ${message}`;
+      let errorDetails = error ? error.stack : `at ${source}:${lineno}:${colno}`;
+      this.showError(errorMessage, errorDetails);
+      return true; // Prevent default browser error handling
+    };
+
+    // Catch uncaught promise rejections
+    window.onunhandledrejection = (event) => {
+      let errorMessage = `Unhandled Promise Rejection: ${event.reason}`;
+      let errorDetails = event.reason && event.reason.stack ? event.reason.stack : 'No stack trace available';
+      this.showError(errorMessage, errorDetails);
+      event.preventDefault(); // Prevent default browser handling (e.g., console warning)
+    };
+  }
+
+  showError (message, details = '') {
+    console.error('Application Error Caught:', message, details); // Still log to console for development
+    this.errorDisplay.textString = `${message}\n${details.split('\n')[0]}`; // Show message + first line of stack
+    this.errorDisplay.visible = true;
+
+    // Reposition to ensure it's visible if text changed size significantly
+    // We use a fixed width, but if the actual text width is smaller, it might look off.
+    // For simplicity, just center it horizontally based on its new text content.
+    this.errorDisplay.position = pt(
+      this.width / 2 - this.errorDisplay.textBounds().width / 2,
+      this.height - this.errorDisplay.textBounds().height - 10
+    );
+
+    // Hide the error after a few seconds
+    if (this._errorTimeout) clearTimeout(this._errorTimeout);
+    this._errorTimeout = setTimeout(() => {
+      this.errorDisplay.visible = false;
+      this.errorDisplay.textString = '';
+    }, 7000); // Hide after 7 seconds
   }
 
   // Handles keyboard input for paddle movement and game start/restart
