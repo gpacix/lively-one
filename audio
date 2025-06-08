@@ -1,0 +1,19 @@
+
+
+
+javascript workspace
+local
+
+o.frequency.linearRampToValueAtTime(27.5*4, context.currentTime);
+o.frequency.linearRampToValueAtTime(27.5*16, context.currentTime + 15);
+getFields(g) gain context numberOfInputs numberOfOutputs channelCount channelCountMode channelInterpretation connect disconnect addEventListener dispatchEvent removeEventListener
+g.gain.linearRampToValueAtTime(0, context.currentTime + 10)
+g.gain.linearRampToValueAtTime(0, context.currentTime)
+g.gain.linearRampToValueAtTime(1, context.currentTime + 10)
+g.gain.linearRampToValueAtTime(0, context.currentTime + 20)
+
+getFields(context) // baseLatency outputLatency close createMediaElementSource createMediaStreamDestination createMediaStreamSource getOutputTimestamp resume suspend onerror sinkId onsinkchange setSinkId destination sampleRate currentTime listener state onstatechange createAnalyser createBiquadFilter createBuffer createBufferSource createChannelMerger createChannelSplitter createConstantSource createConvolver createDelay createDynamicsCompressor createGain createIIRFilter createOscillator createPanner createPeriodicWave createScriptProcessor createStereoPanner createWaveShaper decodeAudioData audioWorklet addEventListener dispatchEvent removeEventListener
+
+g.gain.value = 1
+
+context.close()

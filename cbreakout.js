@@ -71,7 +71,7 @@ export class Paddle extends Box {
     super({
       position: pt(0, 0), // Default position for the Paddle morph itself
       extent: pt(PADDLE_WIDTH, PADDLE_HEIGHT), // Default size for the Paddle morph itself
-      fill: Color.magentap,
+      fill: Color.magenta,
       borderColor: Color.white,
       borderWidth: 2,
       grabbable: false,
@@ -616,3 +616,14 @@ export class BreakoutGame extends Box {
     }
   }
 }
+/* Workspace:
+   import { BreakoutGame } from 'gpacix--lively-one/breakout'
+
+function newgame() {
+    game = new BreakoutGame();
+    game.openInWorld();
+    game.bringToFront();
+}
+
+newgame()
+*/
